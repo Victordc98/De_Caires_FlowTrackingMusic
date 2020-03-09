@@ -7,7 +7,7 @@ SoundFile baseArp1;
 SoundFile baseArp2;
 SoundFile melodyArp1;
 SoundFile melodyArp2;
-SoundFile lead;
+
 
 float ampIncrease =0.01;
 
@@ -67,7 +67,7 @@ void setup() {
   melodyArp2.play();
 
 
-  //set original amplitudes
+  //set starting amplitudes
   basePad.amp(1);
   baseArp1.amp(.02);
   baseArp2.amp(.02);
@@ -79,18 +79,20 @@ void setup() {
 
 
 void draw() {
-  //background(10,0,40,20);
+  
 
   if (webcam.available()) {
     webcam.read();
     float r=random(100, 200);
     float b=random(80, 230);
     float g=random(10, 50);
-    // draw the image, with a dark overlay (moar sparkle)
-    //image(webcam, 0,0, width,height);
     fill(r,g,b, 100);
     rect(0, 0, width, height);
 
+  // draw the image, with a dark overlay (moar sparkle)
+    //image(webcam, 0,0, width,height); /line commented out for specifi visual aesthetic 
+    
+    
     // load the frame into OpenCV and calculate the
     // optical flow
     cv.loadImage(webcam);
@@ -124,12 +126,11 @@ void draw() {
         } 
         avgFlow+=flow.y;
         flowCnt++;
-        ////map the amplitude of certain audio flies to the circles
-        //float melodyAmp= map(gridSize, 0, webcam.width, 0, 1);
-        //melodyArp1.amp(melodyAmp);
-        //melodyArp2.amp(melodyAmp);
+        
       }
     }
+    
+    //change the amplitudes of sound files of based on position
     melodyAmp+=constrain(avgFlow/flowCnt*.3, -.2, .2);
     melodyAmp=constrain(melodyAmp, 0.01, 1);
     melodyArp1.amp(melodyAmp);
@@ -138,48 +139,4 @@ void draw() {
     baseArp2.amp(1-melodyAmp);
     println(melodyAmp);
   }
-  //fill(245);
-  //ellipse(mouseX,mouseY, 20,20);
-
-
-  //float amplitude = map(mouseY, height, 0, 0.01, 1.0);
-  //backing.amp(amplitude);
-  //lead.amp(amplitude);
-
-
-  //float panning = map(mouseX, 0, width, -1.0, 1.0);
-  //lead.pan(panning);
 }
-
-//void mousePressed(){
-//  loadPixels();
-//  colorToMatch = pixels[mouseY*width+mouseX];
-//}
-
-//PVector findColor(PImage in, color c, float tolerance) {
-//  //float matchR=red(c);
-//  float matchR=c>> 16 & 0xFF;
-//  float matchG=c>> 8 & 0xFF;
-//  float matchB=c & 0xFF;
-
-//  in.loadPixels();
-//  for (int y=0; y<in.height; y++) {
-//    for (int x=0; x<in.height; x++) {
-//      color current =in.pixels[y*in.width+x];
-//      float r=current >> 16 & 0xFF;
-//      float g=current >> 8 & 0xFF;
-//      float b=current & 0xFF;
-
-//      if(r>= matchR-tolerance && r<=matchR+tolerance &&
-//      g>= matchG-tolerance && g<=matchG+tolerance &&
-//      b>= matchB-tolerance && b<=matchB+tolerance ){
-
-//        return new PVector(x,y); 
-//      }
-
-//    }
-//  }
-
-//  return null;
-
-//}
