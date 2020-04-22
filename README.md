@@ -10,7 +10,7 @@
  ## Instructions
   To run, the code requires three libraries: Video, Sound, OpenCV. Also, audio files are required for download, although these can be substituted for others.
   
-  Once downloaded and ready to run, just run the program and experiemnt with moving hands, or anything, in front of the front facing camera and listen for chnages in the dynamic of the song. 
+  Once downloaded and ready to run, just run the program and experiment with moving hands, or anything, in front of the front facing camera and listen for changes in the dynamic of the song. 
   
   
    
